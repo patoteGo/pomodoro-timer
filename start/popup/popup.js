@@ -9,9 +9,10 @@ const resetTimerBtn = document.querySelector('#reset-timer-btn');
 
 
 function updateTime() {
-	chrome.storage.local.get(['timer'], (res) => {
+	chrome.storage.local.get(['timer', 'timeOption'], (res) => {
 		const time = document.querySelector('#time');
-		const minutes = `${25 - Math.ceil(res.timer / 60)}`.padStart(2, '0')
+		console.log(res)
+		const minutes = `${res.timeOption - Math.ceil(res.timer / 60)}`.padStart(2, '0')
 		const seconds = res.timer % 60 !== 0 ? (`${60 - res.timer % 60}`).padStart(2, '0') : '00'
 		time.textContent = `${minutes} : ${seconds}`
 	})

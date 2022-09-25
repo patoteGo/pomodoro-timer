@@ -6,13 +6,14 @@ chrome.alarms.create('pomodoroTimer', {
 
 chrome.alarms.onAlarm.addListener((alarm) => {
 	if (alarm.name === 'pomodoroTimer') {
-			chrome.storage.local.get(['timer', 'isRunning'], (res) => {
+			chrome.storage.local.get(['timer', 'isRunning', 'timeOption'], (res) => {
+				const timeOption = res.timeOption ? res.timeOption : 25
 				if(res.isRunning) {
 					let timer = res.timer + 1
 					let isRunning = true
-					if(timer === 60 * 25) {
+					if(timer === 60 * timeOption) {
 						this.registration.showNotification('Pomodoro Timer', {
-							body: '25 minutes has passed!',
+							body: `${timeOption} minutes has passed!`,
 							icon: 'icon.png'
 						})
 						timer = 0
